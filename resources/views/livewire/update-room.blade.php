@@ -10,7 +10,7 @@
 
 
     <div class="overflow-auto rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
-        <form wire:submit.prevent="addroom" class="space-y-6">
+        <form wire:submit.prevent="roomUpdate" class="space-y-6">
 
             <div>
                 <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -40,13 +40,14 @@
 
       
                 <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                    {{-- Existing Images from Database --}}
+                   
                     @if($images && count($images) > 0)
                         @foreach($images as $index => $image)
                         <div class="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-900">
                             <img src="{{ asset('storage/' . $image->image_path) }}" alt="Preview" class="h-full w-full object-cover" />
                             <button 
                                 type="button" 
+                        
                                 wire:click="removeExistingImage({{ $image->id }})"
                                 class="absolute right-2 top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100"
                             >
@@ -67,6 +68,7 @@
                             <button 
                                 type="button" 
                                 wire:click="removeNewImage({{ $index }})"
+                              
                                 class="absolute right-2 top-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity hover:bg-red-600 group-hover:opacity-100"
                             >
                                 <flux:icon.x-mark class="size-4" />
@@ -175,7 +177,6 @@
                 <textarea 
                     id="room-description"
                     wire:model="roomDescription"
-             
                     rows="4"
                     placeholder="Describe the room features, amenities, and highlights..." 
                     class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-400 dark:focus:ring-blue-400"
@@ -190,7 +191,7 @@
                 <button type="button" class="rounded-lg border border-gray-300 bg-white px-6 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-400 dark:focus:ring-offset-gray-900">
                     Cancel
                 </button>
-                <button type="submit" wire:click="addroom" class="rounded-lg bg-green-600 px-6 py-2 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-400 dark:focus:ring-offset-gray-900">
+                <button class="rounded-lg bg-green-600 px-6 py-2 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-400 dark:focus:ring-offset-gray-900">
                     Save Room
                 </button>
             </div>
