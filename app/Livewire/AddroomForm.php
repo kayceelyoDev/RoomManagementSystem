@@ -33,7 +33,6 @@ class AddroomForm extends Component
 
     public function addroom()
     {
-         
         $request = new RoomRequest();
 
         $validated = $this->validate(
