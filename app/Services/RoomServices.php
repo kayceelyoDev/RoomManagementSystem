@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Room;
+use App\Models\RoomImage;
+use Exception;
+use Illuminate\Support\Facades\DB;
+
+class RoomServices
+{
+	public function createRoom(array $data)
+	{
+		// return DB::transaction(function()use($data){
+		DB::beginTransaction();
+		try {
+			$room = Room::create([
+				'roomName' => $data['roomName'],
+				'roomDescription' => $data['roomDescription'],
+				'roomNumber' => $data['roomNumber'],
+				'roomPrice' => $data['roomRate'],
+				'capacity' => $data['roomCapacity'],
+			]);
+			if (!empty($data['images'])) {
+				foreach ($data['images'] as $image) {
+					$path = $image->store('rooms', 'public');
+
+					RoomImage::create([
+						'room_id' => $room->id,
+						'image_path' => $path,
+					]);
+				}
+			}
+			DB::commit();
+			return $room;
+		} catch (Exception $e) {
+			
+			DB::rollBack();
+			throw $e;
+		}
+
+	}
+}
+
