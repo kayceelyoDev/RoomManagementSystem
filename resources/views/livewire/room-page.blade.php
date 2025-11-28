@@ -20,7 +20,6 @@
             </button>
         </div>
 
-        <!-- Add Room Button -->
 
         @if (in_array(auth()->user()->role, ['admin', 'supper_admin']))
             <a href="{{ route('addroom') }}"
@@ -73,17 +72,20 @@
                                         title="View">
                                         <flux:icon.eye class="size-5" />
                                     </a>
+                                @if (in_array(auth()->user()->role, ['admin', 'supper_admin']))
                                     <a href="{{ route('roomUpdate',$room->id) }}"
                                         class="rounded p-1 text-blue-600 hover:bg-blue-100 dark:text-blue-400 dark:hover:bg-blue-900/30"
                                         title="Edit">
                                         <flux:icon.pencil class="size-5" />
                                     </a>
-
+                                    
                                     <button
+                                        wire:click="deleteRoom({{ $room -> id }})"
                                         class="rounded p-1 text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/30"
                                         title="Delete">
                                         <flux:icon.trash class="size-5" />
                                     </button>
+                                @endif
                                 </div>
                             </td>
                         </tr>

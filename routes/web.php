@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\AddroomForm;
+use App\Livewire\CheckinView;
 use App\Livewire\CheckoutPage;
 use App\Livewire\Reportpage;
 use App\Livewire\ReservationPage;
@@ -11,35 +12,39 @@ use App\Livewire\ViewRoom;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
-
+use App\Livewire\Addreservation;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
 
     //Route Dashbord///
-
-
-    Route::middleware(['auth', 'verified'])->group(function(){
+    Route::middleware(['auth','verified','role:admin,staff'])->group(function(){
 
         Route::prefix('dashboard')->group(function(){  
               
-        Route::view('/', 'dashboard')->name('dashboard')->middleware('role');
-
-        Route::get('/reservation',ReservationPage::class)->name('reservationPage')->middleware('role');   
+        Route::view('/', 'dashboard')->name('dashboard')->middleware('role:admin,staff');
         
-        Route::middleware('role')->prefix('/room')->group(function(){
-            Route::get('/',RoomPage::class)->name('roompage')->middleware('role');
-            Route::get('/addRoom',AddroomForm::class)->name('addroom');
-            Route::get('/viewRoom/{room}',ViewRoom::class)->name('viewRoom');
-            Route::get('/updateRoom/{room}',UpdateRoom::class)->name('roomUpdate');
+        Route::middleware('role:admin,staff,supper_admin')->prefix('/reservation')->group(function(){
+            Route::get('/',ReservationPage::class)->name('reservationPage')->middleware('role:admin,staff,supper_admin');
+            Route::get('/addReservation',Addreservation::class)->name('addReservation')->middleware('role:admin,staff,supper_admin');
         });
+         
+        
+        Route::middleware('role:admin,staff,supper_admin')->prefix('/room')->group(function(){
+            Route::get('/',RoomPage::class)->name('roompage')->middleware('role:admin,staff,supper_admin');
+            Route::get('/addRoom',AddroomForm::class)->name('addroom')->middleware('role:admin,supper_admin');
+            Route::get('/viewRoom/{room}',ViewRoom::class)->name('viewRoom')->middleware('role:admin,staff,supper_admin');
+            Route::get('/updateRoom/{room}',UpdateRoom::class)->name('roomUpdate')->middleware('role:admin,supper_admin');
+        });
+
+        Route::get('/checin',CheckinView::class)->name('checkinpage')->middleware('role:admin,staff,supper_admin');
        
-        Route::get('/checkout',CheckoutPage::class)->name('checkoutpage')->middleware('role');
+        Route::get('/checkout',CheckoutPage::class)->name('checkoutpage')->middleware('role:admin,staff,supper_admin');
 
-        Route::get('/staffpage', Staffpage::class)->name('staffpage')->middleware('role');
+        Route::get('/staffpage', Staffpage::class)->name('staffpage')->middleware('role:admin,staff,supper_admin');
 
-        Route::get('/reportpage',Reportpage::class)->name('reportpage')->middleware('role');
+        Route::get('/reportpage',Reportpage::class)->name('reportpage')->middleware('role:admin,staff,supper_admin');
         });
         
     });
