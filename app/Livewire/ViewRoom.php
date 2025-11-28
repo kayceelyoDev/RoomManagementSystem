@@ -29,6 +29,7 @@ class ViewRoom extends Component
         $this->room = $room;
         $room->load('image');
     }
+
     public function render()
     {
         return view('livewire.view-room');
