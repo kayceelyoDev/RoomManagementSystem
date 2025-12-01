@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     //
-    protected $fillable =['roomName','roomDescription','roomNumber','roomPrice','capacity'];
+    protected $fillable =['roomName','roomDescription','roomNumber','roomPrice','capacity','status'];
 
     public function image(){
         return $this->hasMany(RoomImage::class);

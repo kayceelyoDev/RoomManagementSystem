@@ -34,8 +34,8 @@
                         :current="request()->routeIs('checkoutpage')" wire:navigate class="mt-3">{{ __('Check-out') }}
                     </flux:navlist.item>
 
-                    <flux:navlist.item icon="calendar-days" :href="route('checkoutpage')"
-                        :current="request()->routeIs('checkoutpage')" wire:navigate class="mt-3">
+                    <flux:navlist.item icon="calendar-days" :href="route('checkinpage')"
+                        :current="request()->routeIs('checkinpage')" wire:navigate class="mt-3">
                         {{ __('Check-in') }}</flux:navlist.item>
                 @endif
 

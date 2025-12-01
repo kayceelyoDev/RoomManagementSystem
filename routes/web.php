@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\AddroomForm;
+use App\Livewire\CheckinPage;
 use App\Livewire\CheckinView;
 use App\Livewire\CheckoutPage;
 use App\Livewire\Reportpage;
@@ -25,12 +26,13 @@ Route::get('/', function () {
               
         Route::view('/', 'dashboard')->name('dashboard')->middleware('role:admin,staff');
         
+        //reservation page///
         Route::middleware('role:admin,staff,supper_admin')->prefix('/reservation')->group(function(){
             Route::get('/',ReservationPage::class)->name('reservationPage')->middleware('role:admin,staff,supper_admin');
             Route::get('/addReservation',Addreservation::class)->name('addReservation')->middleware('role:admin,staff,supper_admin');
         });
          
-        
+        //Room page///
         Route::middleware('role:admin,staff,supper_admin')->prefix('/room')->group(function(){
             Route::get('/',RoomPage::class)->name('roompage')->middleware('role:admin,staff,supper_admin');
             Route::get('/addRoom',AddroomForm::class)->name('addroom')->middleware('role:admin,supper_admin');
@@ -38,7 +40,13 @@ Route::get('/', function () {
             Route::get('/updateRoom/{room}',UpdateRoom::class)->name('roomUpdate')->middleware('role:admin,supper_admin');
         });
 
-        Route::get('/checin',CheckinView::class)->name('checkinpage')->middleware('role:admin,staff,supper_admin');
+        //checkin page///
+
+        Route::middleware('role:admin,staff,supper_admin')->prefix('/checkin')->group(function(){
+             Route::get('/',CheckinPage::class)->name('checkinpage')->middleware('role:admin,staff,supper_admin');
+        });
+
+       
        
         Route::get('/checkout',CheckoutPage::class)->name('checkoutpage')->middleware('role:admin,staff,supper_admin');
 
