@@ -22,12 +22,13 @@ class RoomUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'roomName' => 'required|string|max:255',
+            'roomName' => 'required|string|max:255',
             'roomNumber' => 'required|string|max:255',
             'roomRate' => 'required|numeric|min:0',
             'roomCapacity' => 'required|numeric|min:1',
             'roomDescription' => 'required|string',
             'newImages.*' => 'image|max:230000',
+            'roomStatus' => 'required|string',
         ];
     }
 }

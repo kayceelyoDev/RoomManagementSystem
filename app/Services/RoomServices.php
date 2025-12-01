@@ -52,6 +52,7 @@ class RoomServices
 				'roomNumber' => $data['roomNumber'],
 				'roomPrice' => $data['roomRate'],
 				'capacity' => $data['roomCapacity'],
+				'status' => $data['roomStatus']
 			]);
 			//for new images//
 			if (!empty($data['images'])) {
