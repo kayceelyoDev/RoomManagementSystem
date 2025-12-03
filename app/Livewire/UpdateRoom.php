@@ -27,7 +27,7 @@ class UpdateRoom extends Component
     public $roomRate;
     public $roomCapacity;
     public $roomDescription;
-
+    public $roomStatus;
     // For existing images - remove from current view
     public function removeExistingImage($imageId)
     {
@@ -63,6 +63,7 @@ class UpdateRoom extends Component
         $this->roomRate = $room->roomPrice;
         $this->roomDescription = $room->roomDescription;
         $this->images = $room->image; 
+        $this->roomStatus= $room->status;
     }
 
     public function roomUpdate()
