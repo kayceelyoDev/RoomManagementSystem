@@ -8,6 +8,7 @@ use Livewire\Component;
 class RoomPage extends Component
 {
     public $rooms;
+    
 
     public function deleteRoom($roomId){
         $room = Room::findOrFail($roomId);
