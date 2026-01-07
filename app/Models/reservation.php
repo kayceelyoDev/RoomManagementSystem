@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class reservation extends Model
 {
     //
-    protected $fillable = ['user_id', 'room_id', 'guest_name', 'guest_email', 'guest_phone', 'check_in_date','check_in_time', 'check_out_date', 'number_of_guests','stay_duration','price', 'status'];
+    protected $fillable = ['user_id', 'room_id', 'guest_name', 'guest_email', 'guest_phone', 'check_in_date', 'check_in_time', 'check_out_date', 'number_of_guests', 'stay_duration', 'price', 'status'];
+
+    const STATUS_PENDING = 'Pending';
+    const STATUS_CONFIRMED = 'Confirmed';
 
     public function user()
     {

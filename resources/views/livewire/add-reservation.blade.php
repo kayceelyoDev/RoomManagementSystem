@@ -106,37 +106,37 @@
 
                 <form wire:submit.prevent="addReservation" class="space-y-4">
                     <div class="transition-all duration-300 hover:translate-x-1">
-                        <flux:input wire:model="guestName" label="Full Name" placeholder="Enter guest name" required
+                        <flux:input wire:model="form.guestName" label="Full Name" placeholder="Enter guest name" required
                             class="transition-all duration-300 focus:scale-[1.01]" />
                     </div>
 
                     <div class="transition-all duration-300 hover:translate-x-1">
-                        <flux:input wire:model="guestEmail" type="email" label="Email"
+                        <flux:input wire:model="form.guestEmail" type="email" label="Email"
                             placeholder="guest@example.com" required
                             class="transition-all duration-300 focus:scale-[1.01]" />
                     </div>
 
                     <div class="transition-all duration-300 hover:translate-x-1">
-                        <flux:input wire:model="guestPhone" type="tel" label="Phone Number"
+                        <flux:input wire:model="form.guestPhone" type="tel" label="Phone Number"
                             placeholder="+63 912 345 6789" required
                             class="transition-all duration-300 focus:scale-[1.01]" />
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="transition-all duration-300 hover:translate-y-[-2px]">
-                            <flux:input wire:model="checkInDate" type="date" label="Check-in Date" required
+                            <flux:input wire:model="form.checkInDate" type="date" label="Check-in Date" required
                                 class="transition-all duration-300 focus:scale-[1.01]" />
                         </div>
                         <div class="transition-all duration-300 hover:translate-y-[-2px]">
-                            <flux:input wire:model="checkInTime" type="time" label="Check-in Time" required
+                            <flux:input wire:model="form.checkInTime" type="time" label="Check-in Time" required
                                 class="transition-all duration-300 focus:scale-[1.01]" />
                         </div>
                         <div class="transition-all duration-300 hover:translate-y-[-2px]">
-                            <flux:input wire:model="checkOutDate" type="date" label="Check-out Date" required
+                            <flux:input wire:model="form.checkOutDate" type="date" label="Check-out Date" required
                                 class="transition-all duration-300 focus:scale-[1.01]" />
                         </div>
                         <div class="gap-4 transition-all duration-300 hover:translate-x-1">
-                            <flux:input wire:model="numberOfGuests" type="number" label="Guests" min="1"
+                            <flux:input wire:model="form.numberOfGuests" type="number" label="Guests" min="1"
                                 required class="transition-all duration-300 focus:scale-[1.01]" />
                         </div>
 

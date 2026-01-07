@@ -75,8 +75,6 @@ class ReservationPage extends Component
         //get Current Reservation///
         $currentReservation = reservation::with('room')->findOrFail($this->selectedReservation);
 
-        //price logic//
-
         //get the days stay//
         $this->stay_duration = Carbon::parse($this->check_in_date)->diffInDays(Carbon::parse($this->check_out_date));
 
@@ -84,15 +82,14 @@ class ReservationPage extends Component
         $this->roomPrice = $currentReservation->price;
 
         $this->reservationPrice = floatval($this->roomPrice) * $this->stay_duration;
-        
+
         try {
             $validated = $this->validate($request->updateRules());
             session()->flash('success', 'Reservation created successfully!');
         } catch (\Exception $e) {
             $this->errorMessage = $e->getMessage();
         }
-       
-
+    
         $validated['reservationId'] = $this->selectedReservation;
         $validated['reservationPrice'] = $this->reservationPrice;
 

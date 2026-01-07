@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Http\Requests\reservationRequest;
+use App\Livewire\Forms\ReservationForm;
 use App\Models\reservation;
 use App\Models\Room;
 use App\Services\reservationServices;
@@ -12,25 +13,17 @@ use Livewire\Component;
 
 class AddReservation extends Component
 {
-    
-    public $guestName;
-    public $guestEmail;
-    public $guestPhone;
-    public $checkInDate;
-    public $checkInTime;
-    public $checkOutDate;
-    public $numberOfGuests;
-
 
     public $user_id;
     public $currentMonth;
     public $currentYear;
     public $selectedRoom;
     public $selectedDate;
-    public $rooms;
+    public $rooms = [];
     public $reservations; // fetch from DB later
     public $errorMessage; // add this property
 
+    public  ReservationForm $form;
     protected reservationServices $reservationServices;
 
     public $roomReservations;
@@ -41,7 +34,6 @@ class AddReservation extends Component
     public $stay_duration;
     public function updatedSelectedRoom($roomId)
     {
-        
         $this->roomReservations = reservation::where('room_id', $roomId)
             ->orderBy('check_in_date', 'desc')
             ->get();
@@ -99,40 +91,28 @@ class AddReservation extends Component
         $this->selectedDate = $date->format('Y-m-d');
 
         // Auto-populate check-in here
-        $this->checkInDate = $this->selectedDate;
+        $this->form->checkInDate = $this->selectedDate;
 
         // Auto-set check-out based on internal policy
-        $this->checkOutDate = $date->copy()->addDay()->format('Y-m-d');
+        $this->form->checkOutDate = $date->copy()->addDay()->format('Y-m-d');
     }
 
 
     public function addReservation()
     {
-        $request = new reservationRequest();
-
-        $this->stay_duration = Carbon::parse($this->checkInDate)->diffInDays(Carbon::parse($this->checkOutDate));
-        $this->roomPrice = Room::where('id',$this->selectedRoom)->value('roomPrice');
-        $roomprice = $this->roomPrice;
-
-        $this->reservationsPrice = floatval($roomprice) * $this->stay_duration;
-
-       
-        $request['user_id'] = $this->user_id;
-        $request['selectedRoom'] = $this->selectedRoom;
-        $request['reservationsPrice'] = $this->reservationsPrice;
-        $request['stay_duration'] = $this->stay_duration;
-
-        $validated = $this->validate($request->rules());
-    
+        $this->form->user_id = $this->user_id;
+        $this->form->selectedRoom = $this->selectedRoom;
+        $this->form->reservationsPrice = $this->reservationsPrice;
+        $this->form->stay_duration = $this->stay_duration;
+        $this->form->roomPrice = $this->roomPrice;
         try {
+            $validated = $this->form->makeReservationForm();
             $this->reservationServices->createReservation($validated);
             session()->flash('success', 'Reservation created successfully!');
         } catch (\Exception $e) {
             $this->errorMessage = $e->getMessage();
         }
-
-
-        $this->reset(['guestName','guestEmail','guestPhone','checkInDate','checkInTime','checkOutDate','numberOfGuests']);
+        $this->reset();
     }
 
     public function render()
